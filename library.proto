@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package libraryPackage;
+
+message noParam {}
+
+service AuthorService {
+
+    rpc postAuthor(Author) returns (Author);
+    rpc getAuthors(noParam) returns (Authors);
+    // rpc getAuthorById (AuthorId) returns (Book);
+    rpc putAuthor(Author) returns (Author);
+    rpc deleteAuthor(AuthorId) returns (AuthorId);
+}
+
+message AuthorId {
+    int32 id = 1;
+}
+
+message Author {
+    int32 id = 1;
+    string firstName = 2;
+    string lastName = 3;
+}
+
+message Authors {
+    repeated Author authors = 1;
+}
+
+service BookService {
+
+    rpc postBook(Book) returns (Book);
+    rpc getBooks(noParam) returns (Books);
+    // rpc getBookById (ISBN) returns (Book);
+    rpc putBook(Book) returns (Book);
+    rpc deleteBook(Book) returns (Book);
+
+}
+
+message ISBN {
+    int32 isbn = 1;
+}
+
+message Book {
+    int32 isbn = 1;
+    string format = 2;
+    string title = 3;
+    int32 authorId = 4;
+}
+
+message Books {
+    repeated Book books = 1;
+}
+
+service AwardService {
+
+    rpc postAward (Award) returns (Award);
+    // rpc getAwardById (AwardId) returns (Award);
+    rpc getAwards (noParam) returns (Awards);
+    rpc putAward (Award) returns (Award);
+    rpc deleteAward (AwardId) returns (noParam);
+}
+
+message AwardId {
+    int32 id = 1;
+}
+
+message Award {
+    int32 id = 1;
+    string name = 2;
+}
+
+message Awards {
+    repeated Award awards = 1;
+}
+
+service AuthorAwardService {
+
+    rpc postAuthorAward (AuthorAward) returns (AuthorAward);
+    rpc getAwardsByAuthorId (AuthorId) returns (Awards);
+    rpc getAuthorsByAwardId (AwardId) returns (Authors);
+    rpc putAuthorAward (AuthorAward) returns (AuthorAward);
+    rpc deleteAuthorAward (AuthorAward) returns (noParam);
+}
+
+message AuthorAward {
+    int32 authorId = 1;
+    int32 awardId = 2;
+}
+
+service BookAwardService {
+
+    rpc postBookAward (BookAward) returns (BookAward);
+    rpc getAwardsByBookId (ISBN) returns (Awards);
+    rpc getBooksByAwardId (AwardId) returns (Books);
+    rpc putBookAward (BookAward) returns (BookAward);
+    rpc deleteBookAward (BookAward) returns (noParam);
+
+}
+
+message BookAward {
+    int32 isbn = 1;
+    string format = 2;
+    int32 awardId = 3;
+}
+
+service ReportService {
+
+    rpc topAuthors (noParam) returns (Authors);
+    rpc topBooks (noParam) returns (BookAwardCounts);
+    rpc topAwards (noParam) returns (AwardCounts);
+}
+
+message AwardCount {
+    int32 awardId = 1;
+    string awardName = 2;
+    int32 awardCount = 3;
+}
+
+message AwardCounts {
+    repeated AwardCount awardCounts = 1;
+}
+
+message BookAwardCount {
+    int32 isbn = 1;
+    int32 count = 2;
+}
+
+message BookAwardCounts {
+    repeated BookAwardCount bookAwardCounts = 1;
+}
+
+
+
